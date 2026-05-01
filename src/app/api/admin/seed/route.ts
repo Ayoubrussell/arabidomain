@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { requireDb } from "@/lib/db";
 import bcrypt from "bcryptjs";
 
 export async function POST() {
@@ -7,44 +7,47 @@ export async function POST() {
     return NextResponse.json({ error: "غير مسموح" }, { status: 403 });
   }
 
+  const db = requireDb();
+  if (db instanceof NextResponse) return db;
+
   // Seed categories
   const categories = await Promise.all([
-    prisma.category.upsert({
+    db.category.upsert({
       where: { slug: "real-estate" },
       update: {},
       create: { name: "عقارات", slug: "real-estate" },
     }),
-    prisma.category.upsert({
+    db.category.upsert({
       where: { slug: "tech" },
       update: {},
       create: { name: "تقنية", slug: "tech" },
     }),
-    prisma.category.upsert({
+    db.category.upsert({
       where: { slug: "finance" },
       update: {},
       create: { name: "مالية", slug: "finance" },
     }),
-    prisma.category.upsert({
+    db.category.upsert({
       where: { slug: "health" },
       update: {},
       create: { name: "صحة", slug: "health" },
     }),
-    prisma.category.upsert({
+    db.category.upsert({
       where: { slug: "education" },
       update: {},
       create: { name: "تعليم", slug: "education" },
     }),
-    prisma.category.upsert({
+    db.category.upsert({
       where: { slug: "travel" },
       update: {},
       create: { name: "سفر", slug: "travel" },
     }),
-    prisma.category.upsert({
+    db.category.upsert({
       where: { slug: "ecommerce" },
       update: {},
       create: { name: "تجارة إلكترونية", slug: "ecommerce" },
     }),
-    prisma.category.upsert({
+    db.category.upsert({
       where: { slug: "media" },
       update: {},
       create: { name: "إعلام", slug: "media" },
@@ -79,7 +82,7 @@ export async function POST() {
   ];
 
   for (const d of domainsData) {
-    await prisma.domain.upsert({
+    await db.domain.upsert({
       where: { fullName: `${d.name}${d.tld}` },
       update: {},
       create: {
@@ -96,7 +99,7 @@ export async function POST() {
 
   // Seed admin
   const passwordHash = await bcrypt.hash("admin123", 12);
-  await prisma.admin.upsert({
+  await db.admin.upsert({
     where: { email: "admin@premium-domains.com" },
     update: {},
     create: {

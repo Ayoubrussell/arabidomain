@@ -13,10 +13,19 @@ const categoryIcons: Record<string, string> = {
 };
 
 export default async function CategoriesSection() {
-  const categories = await prisma.category.findMany({
-    include: { _count: { select: { domains: true } } },
-    orderBy: { name: "asc" },
-  });
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let categories: any[] = [];
+
+  try {
+    if (prisma) {
+      categories = await prisma.category.findMany({
+        include: { _count: { select: { domains: true } } },
+        orderBy: { name: "asc" },
+      });
+    }
+  } catch {
+    // Database unavailable — show empty state
+  }
 
   if (categories.length === 0) return null;
 

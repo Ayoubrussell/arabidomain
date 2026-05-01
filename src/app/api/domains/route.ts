@@ -1,8 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { requireDb } from "@/lib/db";
 import { Prisma } from "@/generated/prisma/client";
 
 export async function GET(request: NextRequest) {
+  const db = requireDb();
+  if (db instanceof NextResponse) return db;
+
   const { searchParams } = request.nextUrl;
   const q = searchParams.get("q") || "";
   const category = searchParams.get("category") || "";
@@ -31,14 +34,14 @@ export async function GET(request: NextRequest) {
   else if (sort === "views") orderBy = { views: "desc" };
 
   const [domains, total] = await Promise.all([
-    prisma.domain.findMany({
+    db.domain.findMany({
       where,
       include: { category: true },
       orderBy,
       skip: (page - 1) * limit,
       take: limit,
     }),
-    prisma.domain.count({ where }),
+    db.domain.count({ where }),
   ]);
 
   return NextResponse.json({
@@ -50,13 +53,16 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const db = requireDb();
+  if (db instanceof NextResponse) return db;
+
   const { verifyAdmin } = await import("@/lib/auth");
   const auth = verifyAdmin(request);
   if (auth instanceof NextResponse) return auth;
 
   const body = await request.json();
 
-  const domain = await prisma.domain.create({
+  const domain = await db.domain.create({
     data: {
       name: body.name,
       tld: body.tld,

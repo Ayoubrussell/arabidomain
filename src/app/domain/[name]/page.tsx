@@ -14,6 +14,8 @@ export default async function DomainPage({ params }: PageProps) {
   const { name } = await params;
   const decodedName = decodeURIComponent(name);
 
+  if (!prisma) notFound();
+
   const domain = await prisma.domain.findUnique({
     where: { fullName: decodedName },
     include: { category: true },
@@ -21,7 +23,6 @@ export default async function DomainPage({ params }: PageProps) {
 
   if (!domain) notFound();
 
-  // Increment views
   await prisma.domain.update({
     where: { id: domain.id },
     data: { views: { increment: 1 } },

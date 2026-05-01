@@ -1,8 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { requireDb } from "@/lib/db";
 
 export async function GET() {
-  const inquiries = await prisma.inquiry.findMany({
+  const db = requireDb();
+  if (db instanceof NextResponse) return db;
+
+  const inquiries = await db.inquiry.findMany({
     include: { domain: true },
     orderBy: { createdAt: "desc" },
   });
@@ -10,6 +13,9 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
+  const db = requireDb();
+  if (db instanceof NextResponse) return db;
+
   const body = await request.json();
 
   if (!body.domainId || !body.buyerName || !body.email) {
@@ -19,7 +25,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const domain = await prisma.domain.findUnique({
+  const domain = await db.domain.findUnique({
     where: { id: body.domainId },
   });
 
@@ -30,7 +36,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const inquiry = await prisma.inquiry.create({
+  const inquiry = await db.inquiry.create({
     data: {
       domainId: body.domainId,
       buyerName: body.buyerName,

@@ -2,12 +2,21 @@ import { prisma } from "@/lib/prisma";
 import DomainCard from "./DomainCard";
 
 export default async function FeaturedDomains() {
-  const domains = await prisma.domain.findMany({
-    where: { isFeatured: true, status: "AVAILABLE" },
-    include: { category: true },
-    take: 6,
-    orderBy: { createdAt: "desc" },
-  });
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let domains: any[] = [];
+
+  try {
+    if (prisma) {
+      domains = await prisma.domain.findMany({
+        where: { isFeatured: true, status: "AVAILABLE" },
+        include: { category: true },
+        take: 6,
+        orderBy: { createdAt: "desc" },
+      });
+    }
+  } catch {
+    // Database unavailable — show empty state
+  }
 
   if (domains.length === 0) return null;
 
