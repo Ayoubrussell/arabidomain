@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { verifyAdmin } from "@/lib/auth";
 
 export async function GET() {
   const categories = await prisma.category.findMany({
@@ -10,6 +11,9 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
+  const auth = verifyAdmin(request);
+  if (auth instanceof NextResponse) return auth;
+
   const body = await request.json();
 
   const category = await prisma.category.create({

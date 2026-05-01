@@ -1,10 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { verifyAdmin } from "@/lib/auth";
 
 export async function PUT(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const auth = verifyAdmin(request);
+  if (auth instanceof NextResponse) return auth;
+
   const { id } = await params;
   const body = await request.json();
 
@@ -17,9 +21,12 @@ export async function PUT(
 }
 
 export async function DELETE(
-  _request: NextRequest,
+  request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const auth = verifyAdmin(request);
+  if (auth instanceof NextResponse) return auth;
+
   const { id } = await params;
   await prisma.category.delete({ where: { id } });
   return NextResponse.json({ success: true });

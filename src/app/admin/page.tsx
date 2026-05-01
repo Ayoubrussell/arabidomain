@@ -15,7 +15,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     async function loadStats() {
       const [domainsRes, inquiriesRes] = await Promise.all([
-        fetch("/api/domains?limit=1"),
+        fetch("/api/domains?limit=1&status=all"),
         fetch("/api/inquiries"),
       ]);
 

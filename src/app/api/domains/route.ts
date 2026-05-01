@@ -11,7 +11,9 @@ export async function GET(request: NextRequest) {
   const page = Math.max(1, Number(searchParams.get("page")) || 1);
   const limit = Math.min(50, Number(searchParams.get("limit")) || 12);
 
-  const where: Prisma.DomainWhereInput = { status: "AVAILABLE" };
+  const statusParam = searchParams.get("status") || "";
+  const where: Prisma.DomainWhereInput =
+    statusParam === "all" ? {} : { status: "AVAILABLE" };
 
   if (q) {
     where.OR = [
@@ -48,6 +50,10 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const { verifyAdmin } = await import("@/lib/auth");
+  const auth = verifyAdmin(request);
+  if (auth instanceof NextResponse) return auth;
+
   const body = await request.json();
 
   const domain = await prisma.domain.create({

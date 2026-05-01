@@ -40,7 +40,7 @@ export default function AdminDomainsPage() {
   }, []);
 
   async function loadDomains() {
-    const res = await fetch("/api/domains?limit=100");
+    const res = await fetch("/api/domains?limit=100&status=all");
     const data = await res.json();
     setDomains(data.domains || []);
   }
