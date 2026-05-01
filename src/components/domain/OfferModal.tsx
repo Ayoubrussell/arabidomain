@@ -52,7 +52,13 @@ export default function OfferModal({
       }
 
       setSuccess(true);
-      setForm({ buyerName: "", email: "", phone: "", offerAmount: "", message: "" });
+      setForm({
+        buyerName: "",
+        email: "",
+        phone: "",
+        offerAmount: "",
+        message: "",
+      });
     } catch (err) {
       setError(err instanceof Error ? err.message : "حدث خطأ غير متوقع");
     } finally {
@@ -67,7 +73,7 @@ export default function OfferModal({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm"
           onClick={onClose}
         >
           <motion.div
@@ -75,15 +81,15 @@ export default function OfferModal({
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-lg rounded-2xl border border-white/10 bg-charcoal p-8"
+            className="w-full max-w-lg rounded-2xl border border-gray-200 bg-white p-8 shadow-xl"
           >
             <div className="mb-6 flex items-center justify-between">
-              <h2 className="text-xl font-bold text-gold">
+              <h2 className="text-xl font-bold text-accent-dark">
                 قدّم عرضاً — {domainName}
               </h2>
               <button
                 onClick={onClose}
-                className="text-white/40 transition-colors hover:text-white"
+                className="text-gray-400 transition-colors hover:text-foreground"
               >
                 ✕
               </button>
@@ -92,15 +98,15 @@ export default function OfferModal({
             {success ? (
               <div className="py-8 text-center">
                 <div className="mb-4 text-4xl">🎉</div>
-                <h3 className="mb-2 text-lg font-bold text-gold">
+                <h3 className="mb-2 text-lg font-bold text-accent-dark">
                   تم إرسال عرضك بنجاح!
                 </h3>
-                <p className="text-sm text-white/50">
+                <p className="text-sm text-gray-500">
                   سنتواصل معك في أقرب وقت ممكن.
                 </p>
                 <button
                   onClick={onClose}
-                  className="mt-6 rounded-xl bg-gold px-6 py-2 text-sm font-medium text-background transition-colors hover:bg-gold-light"
+                  className="mt-6 rounded-xl bg-accent px-6 py-2 text-sm font-medium text-navy transition-colors hover:bg-accent-light"
                 >
                   إغلاق
                 </button>
@@ -108,13 +114,13 @@ export default function OfferModal({
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
                 {error && (
-                  <p className="rounded-lg bg-red-500/10 p-3 text-sm text-red-400">
+                  <p className="rounded-lg bg-red-50 p-3 text-sm text-red-600">
                     {error}
                   </p>
                 )}
 
                 <div>
-                  <label className="mb-1 block text-sm text-white/60">
+                  <label className="mb-1 block text-sm text-gray-500">
                     الاسم الكامل *
                   </label>
                   <input
@@ -124,12 +130,12 @@ export default function OfferModal({
                     onChange={(e) =>
                       setForm({ ...form, buyerName: e.target.value })
                     }
-                    className="w-full rounded-xl border border-white/10 bg-charcoal-dark px-4 py-3 text-white outline-none transition-colors focus:border-gold/50"
+                    className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-foreground outline-none transition-colors focus:border-accent"
                   />
                 </div>
 
                 <div>
-                  <label className="mb-1 block text-sm text-white/60">
+                  <label className="mb-1 block text-sm text-gray-500">
                     البريد الإلكتروني *
                   </label>
                   <input
@@ -139,12 +145,12 @@ export default function OfferModal({
                     onChange={(e) =>
                       setForm({ ...form, email: e.target.value })
                     }
-                    className="w-full rounded-xl border border-white/10 bg-charcoal-dark px-4 py-3 text-white outline-none transition-colors focus:border-gold/50"
+                    className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-foreground outline-none transition-colors focus:border-accent"
                   />
                 </div>
 
                 <div>
-                  <label className="mb-1 block text-sm text-white/60">
+                  <label className="mb-1 block text-sm text-gray-500">
                     رقم الهاتف
                   </label>
                   <input
@@ -153,13 +159,13 @@ export default function OfferModal({
                     onChange={(e) =>
                       setForm({ ...form, phone: e.target.value })
                     }
-                    className="w-full rounded-xl border border-white/10 bg-charcoal-dark px-4 py-3 text-white outline-none transition-colors focus:border-gold/50"
+                    className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-foreground outline-none transition-colors focus:border-accent"
                     dir="ltr"
                   />
                 </div>
 
                 <div>
-                  <label className="mb-1 block text-sm text-white/60">
+                  <label className="mb-1 block text-sm text-gray-500">
                     مبلغ العرض (بالدولار)
                   </label>
                   <input
@@ -168,14 +174,14 @@ export default function OfferModal({
                     onChange={(e) =>
                       setForm({ ...form, offerAmount: e.target.value })
                     }
-                    className="w-full rounded-xl border border-white/10 bg-charcoal-dark px-4 py-3 text-white outline-none transition-colors focus:border-gold/50"
+                    className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-foreground outline-none transition-colors focus:border-accent"
                     dir="ltr"
                     min="0"
                   />
                 </div>
 
                 <div>
-                  <label className="mb-1 block text-sm text-white/60">
+                  <label className="mb-1 block text-sm text-gray-500">
                     رسالتك
                   </label>
                   <textarea
@@ -184,14 +190,14 @@ export default function OfferModal({
                       setForm({ ...form, message: e.target.value })
                     }
                     rows={3}
-                    className="w-full resize-none rounded-xl border border-white/10 bg-charcoal-dark px-4 py-3 text-white outline-none transition-colors focus:border-gold/50"
+                    className="w-full resize-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-foreground outline-none transition-colors focus:border-accent"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full rounded-xl bg-gold py-3 font-bold text-background transition-all hover:bg-gold-light disabled:opacity-50"
+                  className="w-full rounded-xl bg-accent py-3 font-bold text-navy transition-all hover:bg-accent-light disabled:opacity-50"
                 >
                   {loading ? "جاري الإرسال..." : "إرسال العرض"}
                 </button>

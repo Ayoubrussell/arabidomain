@@ -12,13 +12,13 @@ export default async function FeaturedDomains() {
   if (domains.length === 0) return null;
 
   return (
-    <section className="bg-background py-24">
+    <section className="bg-white py-24">
       <div className="mx-auto max-w-7xl px-6">
         <div className="mb-12 text-center">
-          <h2 className="mb-3 text-3xl font-black md:text-4xl">
-            نطاقات <span className="text-gold">مميزة</span>
+          <h2 className="mb-3 text-3xl font-black text-foreground md:text-4xl">
+            نطاقات <span className="text-accent-dark">مميزة</span>
           </h2>
-          <p className="text-sm text-white/40">
+          <p className="text-sm text-gray-500">
             مجموعة مختارة بعناية من أفضل النطاقات المتاحة
           </p>
         </div>

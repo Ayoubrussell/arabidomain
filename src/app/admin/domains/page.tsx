@@ -120,15 +120,15 @@ export default function AdminDomainsPage() {
   return (
     <div>
       <div className="mb-8 flex items-center justify-between">
-        <h1 className="text-2xl font-black">
-          إدارة <span className="text-gold">النطاقات</span>
+        <h1 className="text-2xl font-black text-foreground">
+          إدارة <span className="text-accent-dark">النطاقات</span>
         </h1>
         <button
           onClick={() => {
             resetForm();
             setShowForm(!showForm);
           }}
-          className="rounded-xl bg-gold px-5 py-2 text-sm font-bold text-background transition-colors hover:bg-gold-light"
+          className="rounded-xl bg-accent px-5 py-2 text-sm font-bold text-navy transition-colors hover:bg-accent-light"
         >
           {showForm ? "إلغاء" : "إضافة نطاق"}
         </button>
@@ -137,11 +137,11 @@ export default function AdminDomainsPage() {
       {showForm && (
         <form
           onSubmit={handleSubmit}
-          className="mb-8 space-y-4 rounded-2xl border border-white/5 bg-charcoal p-6"
+          className="mb-8 space-y-4 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm"
         >
           <div className="grid gap-4 md:grid-cols-3">
             <div>
-              <label className="mb-1 block text-sm text-white/60">
+              <label className="mb-1 block text-sm text-gray-500">
                 اسم النطاق
               </label>
               <input
@@ -149,18 +149,18 @@ export default function AdminDomainsPage() {
                 required
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="w-full rounded-xl border border-white/10 bg-charcoal-dark px-4 py-2.5 text-white outline-none focus:border-gold/50"
+                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-foreground outline-none focus:border-accent"
                 dir="ltr"
               />
             </div>
             <div>
-              <label className="mb-1 block text-sm text-white/60">
+              <label className="mb-1 block text-sm text-gray-500">
                 الامتداد
               </label>
               <select
                 value={form.tld}
                 onChange={(e) => setForm({ ...form, tld: e.target.value })}
-                className="w-full rounded-xl border border-white/10 bg-charcoal-dark px-4 py-2.5 text-white outline-none focus:border-gold/50"
+                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-foreground outline-none focus:border-accent"
               >
                 {[".com", ".net", ".sa", ".io", ".ai", ".org"].map((tld) => (
                   <option key={tld} value={tld}>
@@ -170,14 +170,14 @@ export default function AdminDomainsPage() {
               </select>
             </div>
             <div>
-              <label className="mb-1 block text-sm text-white/60">
+              <label className="mb-1 block text-sm text-gray-500">
                 السعر (USD)
               </label>
               <input
                 type="number"
                 value={form.price}
                 onChange={(e) => setForm({ ...form, price: e.target.value })}
-                className="w-full rounded-xl border border-white/10 bg-charcoal-dark px-4 py-2.5 text-white outline-none focus:border-gold/50"
+                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-foreground outline-none focus:border-accent"
                 dir="ltr"
                 placeholder="اتركه فارغاً لـ 'قدّم عرضاً'"
               />
@@ -185,26 +185,26 @@ export default function AdminDomainsPage() {
           </div>
 
           <div>
-            <label className="mb-1 block text-sm text-white/60">الوصف</label>
+            <label className="mb-1 block text-sm text-gray-500">الوصف</label>
             <textarea
               value={form.description}
               onChange={(e) =>
                 setForm({ ...form, description: e.target.value })
               }
               rows={2}
-              className="w-full resize-none rounded-xl border border-white/10 bg-charcoal-dark px-4 py-2.5 text-white outline-none focus:border-gold/50"
+              className="w-full resize-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-foreground outline-none focus:border-accent"
             />
           </div>
 
           <div className="grid gap-4 md:grid-cols-3">
             <div>
-              <label className="mb-1 block text-sm text-white/60">الفئة</label>
+              <label className="mb-1 block text-sm text-gray-500">الفئة</label>
               <select
                 value={form.categoryId}
                 onChange={(e) =>
                   setForm({ ...form, categoryId: e.target.value })
                 }
-                className="w-full rounded-xl border border-white/10 bg-charcoal-dark px-4 py-2.5 text-white outline-none focus:border-gold/50"
+                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-foreground outline-none focus:border-accent"
               >
                 <option value="">بدون فئة</option>
                 {categories.map((cat) => (
@@ -215,13 +215,13 @@ export default function AdminDomainsPage() {
               </select>
             </div>
             <div>
-              <label className="mb-1 block text-sm text-white/60">
+              <label className="mb-1 block text-sm text-gray-500">
                 الحالة
               </label>
               <select
                 value={form.status}
                 onChange={(e) => setForm({ ...form, status: e.target.value })}
-                className="w-full rounded-xl border border-white/10 bg-charcoal-dark px-4 py-2.5 text-white outline-none focus:border-gold/50"
+                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-foreground outline-none focus:border-accent"
               >
                 <option value="AVAILABLE">متاح</option>
                 <option value="PENDING">قيد الانتظار</option>
@@ -229,14 +229,14 @@ export default function AdminDomainsPage() {
               </select>
             </div>
             <div className="flex items-end">
-              <label className="flex cursor-pointer items-center gap-2 text-sm text-white/60">
+              <label className="flex cursor-pointer items-center gap-2 text-sm text-gray-500">
                 <input
                   type="checkbox"
                   checked={form.isFeatured}
                   onChange={(e) =>
                     setForm({ ...form, isFeatured: e.target.checked })
                   }
-                  className="accent-gold"
+                  className="accent-accent-dark"
                 />
                 نطاق مميز
               </label>
@@ -245,17 +245,17 @@ export default function AdminDomainsPage() {
 
           <button
             type="submit"
-            className="rounded-xl bg-gold px-6 py-2.5 font-bold text-background transition-colors hover:bg-gold-light"
+            className="rounded-xl bg-accent px-6 py-2.5 font-bold text-navy transition-colors hover:bg-accent-light"
           >
             {editingId ? "تحديث" : "إضافة"}
           </button>
         </form>
       )}
 
-      <div className="overflow-x-auto rounded-2xl border border-white/5 bg-charcoal">
+      <div className="overflow-x-auto rounded-2xl border border-gray-200 bg-white shadow-sm">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-white/5 text-white/40">
+            <tr className="border-b border-gray-200 text-gray-400">
               <th className="px-6 py-4 text-right font-medium">النطاق</th>
               <th className="px-6 py-4 text-right font-medium">الفئة</th>
               <th className="px-6 py-4 text-right font-medium">السعر</th>
@@ -268,15 +268,15 @@ export default function AdminDomainsPage() {
             {domains.map((domain) => (
               <tr
                 key={domain.id}
-                className="border-b border-white/5 transition-colors hover:bg-white/[0.02]"
+                className="border-b border-gray-100 transition-colors hover:bg-gray-50"
               >
-                <td className="px-6 py-4 font-bold" dir="ltr">
+                <td className="px-6 py-4 font-bold text-foreground" dir="ltr">
                   {domain.fullName}
                 </td>
-                <td className="px-6 py-4 text-white/50">
+                <td className="px-6 py-4 text-gray-500">
                   {domain.category?.name || "—"}
                 </td>
-                <td className="px-6 py-4 text-gold" dir="ltr">
+                <td className="px-6 py-4 text-accent-dark" dir="ltr">
                   {domain.price
                     ? `$${Number(domain.price).toLocaleString()}`
                     : "عرض"}
@@ -285,10 +285,10 @@ export default function AdminDomainsPage() {
                   <span
                     className={`rounded-full px-2 py-1 text-xs ${
                       domain.status === "AVAILABLE"
-                        ? "bg-green-500/10 text-green-400"
+                        ? "bg-green-50 text-green-600"
                         : domain.status === "PENDING"
-                          ? "bg-yellow-500/10 text-yellow-400"
-                          : "bg-red-500/10 text-red-400"
+                          ? "bg-yellow-50 text-yellow-600"
+                          : "bg-red-50 text-red-600"
                     }`}
                   >
                     {domain.status === "AVAILABLE"
@@ -300,7 +300,7 @@ export default function AdminDomainsPage() {
                 </td>
                 <td className="px-6 py-4">
                   {domain.isFeatured ? (
-                    <span className="text-gold">★</span>
+                    <span className="text-accent-dark">★</span>
                   ) : (
                     "—"
                   )}
@@ -309,13 +309,13 @@ export default function AdminDomainsPage() {
                   <div className="flex gap-2">
                     <button
                       onClick={() => startEdit(domain)}
-                      className="rounded-lg bg-blue-500/10 px-3 py-1 text-xs text-blue-400 transition-colors hover:bg-blue-500/20"
+                      className="rounded-lg bg-blue-50 px-3 py-1 text-xs text-blue-600 transition-colors hover:bg-blue-100"
                     >
                       تعديل
                     </button>
                     <button
                       onClick={() => handleDelete(domain.id)}
-                      className="rounded-lg bg-red-500/10 px-3 py-1 text-xs text-red-400 transition-colors hover:bg-red-500/20"
+                      className="rounded-lg bg-red-50 px-3 py-1 text-xs text-red-600 transition-colors hover:bg-red-100"
                     >
                       حذف
                     </button>
@@ -327,7 +327,7 @@ export default function AdminDomainsPage() {
         </table>
 
         {domains.length === 0 && (
-          <div className="py-12 text-center text-white/30">
+          <div className="py-12 text-center text-gray-400">
             لا توجد نطاقات بعد
           </div>
         )}

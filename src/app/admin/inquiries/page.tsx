@@ -23,11 +23,11 @@ const statusLabels: Record<string, string> = {
 };
 
 const statusColors: Record<string, string> = {
-  NEW: "bg-blue-500/10 text-blue-400",
-  CONTACTED: "bg-yellow-500/10 text-yellow-400",
-  NEGOTIATING: "bg-purple-500/10 text-purple-400",
-  CLOSED: "bg-green-500/10 text-green-400",
-  REJECTED: "bg-red-500/10 text-red-400",
+  NEW: "bg-blue-50 text-blue-600",
+  CONTACTED: "bg-yellow-50 text-yellow-600",
+  NEGOTIATING: "bg-purple-50 text-purple-600",
+  CLOSED: "bg-green-50 text-green-600",
+  REJECTED: "bg-red-50 text-red-600",
 };
 
 export default function AdminInquiriesPage() {
@@ -60,22 +60,22 @@ export default function AdminInquiriesPage() {
 
   return (
     <div>
-      <h1 className="mb-8 text-2xl font-black">
-        العروض <span className="text-gold">المقدمة</span>
+      <h1 className="mb-8 text-2xl font-black text-foreground">
+        العروض <span className="text-accent-dark">المقدمة</span>
       </h1>
 
       <div className="space-y-4">
         {inquiries.map((inquiry) => (
           <div
             key={inquiry.id}
-            className="rounded-2xl border border-white/5 bg-charcoal p-6"
+            className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm"
           >
             <div className="mb-4 flex flex-wrap items-start justify-between gap-4">
               <div>
-                <h3 className="font-bold text-gold" dir="ltr">
+                <h3 className="font-bold text-accent-dark" dir="ltr">
                   {inquiry.domain.fullName}
                 </h3>
-                <p className="text-sm text-white/40">
+                <p className="text-sm text-gray-400">
                   {new Date(inquiry.createdAt).toLocaleDateString("ar-SA")}
                 </p>
               </div>
@@ -88,7 +88,7 @@ export default function AdminInquiriesPage() {
                 <select
                   value={inquiry.status}
                   onChange={(e) => updateStatus(inquiry.id, e.target.value)}
-                  className="rounded-lg border border-white/10 bg-charcoal-dark px-2 py-1 text-xs text-white outline-none"
+                  className="rounded-lg border border-gray-200 bg-gray-50 px-2 py-1 text-xs text-foreground outline-none"
                 >
                   {Object.entries(statusLabels).map(([value, label]) => (
                     <option key={value} value={value}>
@@ -98,7 +98,7 @@ export default function AdminInquiriesPage() {
                 </select>
                 <button
                   onClick={() => handleDelete(inquiry.id)}
-                  className="rounded-lg bg-red-500/10 px-2 py-1 text-xs text-red-400 transition-colors hover:bg-red-500/20"
+                  className="rounded-lg bg-red-50 px-2 py-1 text-xs text-red-600 transition-colors hover:bg-red-100"
                 >
                   حذف
                 </button>
@@ -107,23 +107,27 @@ export default function AdminInquiriesPage() {
 
             <div className="grid gap-4 text-sm md:grid-cols-2">
               <div>
-                <span className="text-white/40">الاسم: </span>
-                <span>{inquiry.buyerName}</span>
+                <span className="text-gray-400">الاسم: </span>
+                <span className="text-foreground">{inquiry.buyerName}</span>
               </div>
               <div>
-                <span className="text-white/40">البريد: </span>
-                <span dir="ltr">{inquiry.email}</span>
+                <span className="text-gray-400">البريد: </span>
+                <span className="text-foreground" dir="ltr">
+                  {inquiry.email}
+                </span>
               </div>
               {inquiry.phone && (
                 <div>
-                  <span className="text-white/40">الهاتف: </span>
-                  <span dir="ltr">{inquiry.phone}</span>
+                  <span className="text-gray-400">الهاتف: </span>
+                  <span className="text-foreground" dir="ltr">
+                    {inquiry.phone}
+                  </span>
                 </div>
               )}
               {inquiry.offerAmount && (
                 <div>
-                  <span className="text-white/40">مبلغ العرض: </span>
-                  <span className="font-bold text-gold" dir="ltr">
+                  <span className="text-gray-400">مبلغ العرض: </span>
+                  <span className="font-bold text-accent-dark" dir="ltr">
                     ${Number(inquiry.offerAmount).toLocaleString()}
                   </span>
                 </div>
@@ -131,7 +135,7 @@ export default function AdminInquiriesPage() {
             </div>
 
             {inquiry.message && (
-              <div className="mt-4 rounded-xl bg-charcoal-dark p-4 text-sm text-white/60">
+              <div className="mt-4 rounded-xl bg-gray-50 p-4 text-sm text-gray-600">
                 {inquiry.message}
               </div>
             )}
@@ -139,7 +143,7 @@ export default function AdminInquiriesPage() {
         ))}
 
         {inquiries.length === 0 && (
-          <div className="rounded-2xl border border-white/5 bg-charcoal py-12 text-center text-white/30">
+          <div className="rounded-2xl border border-gray-200 bg-white py-12 text-center text-gray-400 shadow-sm">
             لا توجد عروض بعد
           </div>
         )}

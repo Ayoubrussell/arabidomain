@@ -26,9 +26,10 @@ export default function AdminDashboard() {
         totalDomains: domainsData.total || 0,
         availableDomains: domainsData.total || 0,
         totalInquiries: inquiriesData.length || 0,
-        newInquiries: inquiriesData.filter(
-          (i: { status: string }) => i.status === "NEW"
-        ).length || 0,
+        newInquiries:
+          inquiriesData.filter(
+            (i: { status: string }) => i.status === "NEW"
+          ).length || 0,
       });
     }
     loadStats();
@@ -38,46 +39,46 @@ export default function AdminDashboard() {
     {
       label: "إجمالي النطاقات",
       value: stats?.totalDomains ?? "—",
-      color: "text-gold",
+      color: "text-accent-dark",
     },
     {
       label: "نطاقات متاحة",
       value: stats?.availableDomains ?? "—",
-      color: "text-green-400",
+      color: "text-green-600",
     },
     {
       label: "إجمالي العروض",
       value: stats?.totalInquiries ?? "—",
-      color: "text-blue-400",
+      color: "text-blue-600",
     },
     {
       label: "عروض جديدة",
       value: stats?.newInquiries ?? "—",
-      color: "text-orange-400",
+      color: "text-orange-500",
     },
   ];
 
   return (
     <div>
-      <h1 className="mb-8 text-2xl font-black">
-        مرحباً بك في <span className="text-gold">لوحة التحكم</span>
+      <h1 className="mb-8 text-2xl font-black text-foreground">
+        مرحباً بك في <span className="text-accent-dark">لوحة التحكم</span>
       </h1>
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {cards.map((card) => (
           <div
             key={card.label}
-            className="rounded-2xl border border-white/5 bg-charcoal p-6"
+            className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm"
           >
-            <p className="mb-2 text-sm text-white/40">{card.label}</p>
+            <p className="mb-2 text-sm text-gray-400">{card.label}</p>
             <p className={`text-3xl font-black ${card.color}`}>{card.value}</p>
           </div>
         ))}
       </div>
 
-      <div className="mt-8 rounded-2xl border border-white/5 bg-charcoal p-6">
-        <h2 className="mb-4 text-lg font-bold text-gold">بدء سريع</h2>
-        <p className="mb-4 text-sm text-white/50">
+      <div className="mt-8 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+        <h2 className="mb-4 text-lg font-bold text-accent-dark">بدء سريع</h2>
+        <p className="mb-4 text-sm text-gray-500">
           لتعبئة قاعدة البيانات ببيانات تجريبية، اضغط الزر أدناه:
         </p>
         <button
@@ -87,7 +88,7 @@ export default function AdminDashboard() {
             alert(data.message || "تمت العملية");
             window.location.reload();
           }}
-          className="rounded-xl bg-gold/10 px-6 py-2 text-sm font-medium text-gold transition-colors hover:bg-gold/20"
+          className="rounded-xl bg-accent/15 px-6 py-2 text-sm font-medium text-accent-dark transition-colors hover:bg-accent/25"
         >
           تعبئة البيانات التجريبية
         </button>

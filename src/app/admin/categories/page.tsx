@@ -67,15 +67,15 @@ export default function AdminCategoriesPage() {
   return (
     <div>
       <div className="mb-8 flex items-center justify-between">
-        <h1 className="text-2xl font-black">
-          إدارة <span className="text-gold">الفئات</span>
+        <h1 className="text-2xl font-black text-foreground">
+          إدارة <span className="text-accent-dark">الفئات</span>
         </h1>
         <button
           onClick={() => {
             resetForm();
             setShowForm(!showForm);
           }}
-          className="rounded-xl bg-gold px-5 py-2 text-sm font-bold text-background transition-colors hover:bg-gold-light"
+          className="rounded-xl bg-accent px-5 py-2 text-sm font-bold text-navy transition-colors hover:bg-accent-light"
         >
           {showForm ? "إلغاء" : "إضافة فئة"}
         </button>
@@ -84,11 +84,11 @@ export default function AdminCategoriesPage() {
       {showForm && (
         <form
           onSubmit={handleSubmit}
-          className="mb-8 space-y-4 rounded-2xl border border-white/5 bg-charcoal p-6"
+          className="mb-8 space-y-4 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm"
         >
           <div className="grid gap-4 md:grid-cols-2">
             <div>
-              <label className="mb-1 block text-sm text-white/60">
+              <label className="mb-1 block text-sm text-gray-500">
                 اسم الفئة (بالعربية)
               </label>
               <input
@@ -96,12 +96,12 @@ export default function AdminCategoriesPage() {
                 required
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="w-full rounded-xl border border-white/10 bg-charcoal-dark px-4 py-2.5 text-white outline-none focus:border-gold/50"
+                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-foreground outline-none focus:border-accent"
                 placeholder="مثال: عقارات"
               />
             </div>
             <div>
-              <label className="mb-1 block text-sm text-white/60">
+              <label className="mb-1 block text-sm text-gray-500">
                 الرابط (بالإنجليزية)
               </label>
               <input
@@ -109,7 +109,7 @@ export default function AdminCategoriesPage() {
                 required
                 value={form.slug}
                 onChange={(e) => setForm({ ...form, slug: e.target.value })}
-                className="w-full rounded-xl border border-white/10 bg-charcoal-dark px-4 py-2.5 text-white outline-none focus:border-gold/50"
+                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-foreground outline-none focus:border-accent"
                 dir="ltr"
                 placeholder="real-estate"
               />
@@ -117,17 +117,17 @@ export default function AdminCategoriesPage() {
           </div>
           <button
             type="submit"
-            className="rounded-xl bg-gold px-6 py-2.5 font-bold text-background transition-colors hover:bg-gold-light"
+            className="rounded-xl bg-accent px-6 py-2.5 font-bold text-navy transition-colors hover:bg-accent-light"
           >
             {editingId ? "تحديث" : "إضافة"}
           </button>
         </form>
       )}
 
-      <div className="overflow-x-auto rounded-2xl border border-white/5 bg-charcoal">
+      <div className="overflow-x-auto rounded-2xl border border-gray-200 bg-white shadow-sm">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-white/5 text-white/40">
+            <tr className="border-b border-gray-200 text-gray-400">
               <th className="px-6 py-4 text-right font-medium">الاسم</th>
               <th className="px-6 py-4 text-right font-medium">الرابط</th>
               <th className="px-6 py-4 text-right font-medium">
@@ -140,24 +140,28 @@ export default function AdminCategoriesPage() {
             {categories.map((cat) => (
               <tr
                 key={cat.id}
-                className="border-b border-white/5 transition-colors hover:bg-white/[0.02]"
+                className="border-b border-gray-100 transition-colors hover:bg-gray-50"
               >
-                <td className="px-6 py-4 font-bold">{cat.name}</td>
-                <td className="px-6 py-4 text-white/50" dir="ltr">
+                <td className="px-6 py-4 font-bold text-foreground">
+                  {cat.name}
+                </td>
+                <td className="px-6 py-4 text-gray-500" dir="ltr">
                   {cat.slug}
                 </td>
-                <td className="px-6 py-4 text-gold">{cat._count.domains}</td>
+                <td className="px-6 py-4 text-accent-dark">
+                  {cat._count.domains}
+                </td>
                 <td className="px-6 py-4">
                   <div className="flex gap-2">
                     <button
                       onClick={() => startEdit(cat)}
-                      className="rounded-lg bg-blue-500/10 px-3 py-1 text-xs text-blue-400 transition-colors hover:bg-blue-500/20"
+                      className="rounded-lg bg-blue-50 px-3 py-1 text-xs text-blue-600 transition-colors hover:bg-blue-100"
                     >
                       تعديل
                     </button>
                     <button
                       onClick={() => handleDelete(cat.id)}
-                      className="rounded-lg bg-red-500/10 px-3 py-1 text-xs text-red-400 transition-colors hover:bg-red-500/20"
+                      className="rounded-lg bg-red-50 px-3 py-1 text-xs text-red-600 transition-colors hover:bg-red-100"
                     >
                       حذف
                     </button>
@@ -169,7 +173,7 @@ export default function AdminCategoriesPage() {
         </table>
 
         {categories.length === 0 && (
-          <div className="py-12 text-center text-white/30">
+          <div className="py-12 text-center text-gray-400">
             لا توجد فئات بعد
           </div>
         )}

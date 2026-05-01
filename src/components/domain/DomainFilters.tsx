@@ -53,10 +53,10 @@ export default function DomainFilters({
   ];
 
   return (
-    <div className="space-y-6 rounded-2xl border border-white/5 bg-charcoal p-6">
+    <div className="space-y-6 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
       {/* Search */}
       <div>
-        <label className="mb-2 block text-sm font-medium text-white/60">
+        <label className="mb-2 block text-sm font-medium text-gray-500">
           بحث
         </label>
         <input
@@ -68,13 +68,13 @@ export default function DomainFilters({
               updateFilter("q", (e.target as HTMLInputElement).value);
             }
           }}
-          className="w-full rounded-xl border border-white/10 bg-charcoal-dark px-4 py-2.5 text-sm text-white outline-none transition-colors placeholder:text-white/30 focus:border-gold/50"
+          className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-foreground outline-none transition-colors placeholder:text-gray-400 focus:border-accent"
         />
       </div>
 
       {/* Category */}
       <div>
-        <label className="mb-2 block text-sm font-medium text-white/60">
+        <label className="mb-2 block text-sm font-medium text-gray-500">
           الفئة
         </label>
         <div className="flex flex-wrap gap-2">
@@ -82,8 +82,8 @@ export default function DomainFilters({
             onClick={() => updateFilter("category", "")}
             className={`rounded-lg px-3 py-1.5 text-xs transition-all ${
               !activeCategory
-                ? "bg-gold text-background"
-                : "bg-charcoal-dark text-white/50 hover:text-white"
+                ? "bg-accent text-navy font-bold"
+                : "bg-gray-100 text-gray-500 hover:text-foreground"
             }`}
           >
             الكل
@@ -94,8 +94,8 @@ export default function DomainFilters({
               onClick={() => updateFilter("category", cat.slug)}
               className={`rounded-lg px-3 py-1.5 text-xs transition-all ${
                 activeCategory === cat.slug
-                  ? "bg-gold text-background"
-                  : "bg-charcoal-dark text-white/50 hover:text-white"
+                  ? "bg-accent text-navy font-bold"
+                  : "bg-gray-100 text-gray-500 hover:text-foreground"
               }`}
             >
               {cat.name}
@@ -106,7 +106,7 @@ export default function DomainFilters({
 
       {/* TLD */}
       <div>
-        <label className="mb-2 block text-sm font-medium text-white/60">
+        <label className="mb-2 block text-sm font-medium text-gray-500">
           الامتداد
         </label>
         <div className="flex flex-wrap gap-2">
@@ -114,8 +114,8 @@ export default function DomainFilters({
             onClick={() => updateFilter("tld", "")}
             className={`rounded-lg px-3 py-1.5 text-xs transition-all ${
               !activeTld
-                ? "bg-gold text-background"
-                : "bg-charcoal-dark text-white/50 hover:text-white"
+                ? "bg-accent text-navy font-bold"
+                : "bg-gray-100 text-gray-500 hover:text-foreground"
             }`}
           >
             الكل
@@ -126,8 +126,8 @@ export default function DomainFilters({
               onClick={() => updateFilter("tld", tld)}
               className={`rounded-lg px-3 py-1.5 text-xs font-mono transition-all ${
                 activeTld === tld
-                  ? "bg-gold text-background"
-                  : "bg-charcoal-dark text-white/50 hover:text-white"
+                  ? "bg-accent text-navy font-bold"
+                  : "bg-gray-100 text-gray-500 hover:text-foreground"
               }`}
               dir="ltr"
             >
@@ -139,7 +139,7 @@ export default function DomainFilters({
 
       {/* Length */}
       <div>
-        <label className="mb-2 block text-sm font-medium text-white/60">
+        <label className="mb-2 block text-sm font-medium text-gray-500">
           عدد الأحرف
         </label>
         <div className="flex flex-wrap gap-2">
@@ -149,8 +149,8 @@ export default function DomainFilters({
               onClick={() => updateFilter("length", len.value)}
               className={`rounded-lg px-3 py-1.5 text-xs transition-all ${
                 activeLength === len.value
-                  ? "bg-gold text-background"
-                  : "bg-charcoal-dark text-white/50 hover:text-white"
+                  ? "bg-accent text-navy font-bold"
+                  : "bg-gray-100 text-gray-500 hover:text-foreground"
               }`}
             >
               {len.label}
@@ -161,13 +161,13 @@ export default function DomainFilters({
 
       {/* Sort */}
       <div>
-        <label className="mb-2 block text-sm font-medium text-white/60">
+        <label className="mb-2 block text-sm font-medium text-gray-500">
           ترتيب حسب
         </label>
         <select
           value={activeSort}
           onChange={(e) => updateFilter("sort", e.target.value)}
-          className="w-full rounded-xl border border-white/10 bg-charcoal-dark px-4 py-2.5 text-sm text-white outline-none transition-colors focus:border-gold/50"
+          className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-foreground outline-none transition-colors focus:border-accent"
         >
           {sorts.map((s) => (
             <option key={s.value} value={s.value}>

@@ -87,16 +87,16 @@ async function DomainsContent({ searchParams }: PageProps) {
         <div className="mb-6 flex items-center justify-between">
           <h2 className="text-lg font-bold">
             النطاقات المتاحة{" "}
-            <span className="text-sm font-normal text-white/40">
+            <span className="text-sm font-normal text-gray-400">
               ({total} نطاق)
             </span>
           </h2>
         </div>
 
         {domains.length === 0 ? (
-          <div className="rounded-2xl border border-white/5 bg-charcoal py-20 text-center">
-            <p className="text-lg text-white/40">لا توجد نتائج</p>
-            <p className="mt-2 text-sm text-white/20">
+          <div className="rounded-2xl border border-gray-200 bg-white py-20 text-center shadow-sm">
+            <p className="text-lg text-gray-400">لا توجد نتائج</p>
+            <p className="mt-2 text-sm text-gray-300">
               جرّب تغيير معايير البحث
             </p>
           </div>
@@ -132,8 +132,8 @@ async function DomainsContent({ searchParams }: PageProps) {
                   href={`/domains?${params2.toString()}`}
                   className={`rounded-lg px-3 py-1.5 text-sm transition-all ${
                     p === page
-                      ? "bg-gold text-background"
-                      : "bg-charcoal text-white/50 hover:text-white"
+                      ? "bg-accent text-navy font-bold"
+                      : "bg-gray-100 text-gray-500 hover:text-foreground"
                   }`}
                 >
                   {p}
@@ -153,17 +153,17 @@ export default function DomainsPage(props: PageProps) {
       <Navbar />
       <main className="mx-auto max-w-7xl px-6 pt-24 pb-16">
         <div className="mb-8">
-          <h1 className="mb-2 text-3xl font-black md:text-4xl">
-            جميع <span className="text-gold">النطاقات</span>
+          <h1 className="mb-2 text-3xl font-black text-foreground md:text-4xl">
+            جميع <span className="text-accent-dark">النطاقات</span>
           </h1>
-          <p className="text-sm text-white/40">
+          <p className="text-sm text-gray-500">
             تصفّح مجموعتنا الكاملة من النطاقات المميزة
           </p>
         </div>
 
         <Suspense
           fallback={
-            <div className="py-20 text-center text-white/40">
+            <div className="py-20 text-center text-gray-400">
               جاري التحميل...
             </div>
           }

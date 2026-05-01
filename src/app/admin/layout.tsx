@@ -61,31 +61,33 @@ export default function AdminLayout({
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-background">
-        <p className="text-white/40">جاري التحميل...</p>
+      <div className="flex min-h-screen items-center justify-center bg-gray-50">
+        <p className="text-gray-400">جاري التحميل...</p>
       </div>
     );
   }
 
   if (!authenticated) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-background px-6">
-        <div className="w-full max-w-md rounded-2xl border border-white/10 bg-charcoal p-8">
+      <div className="flex min-h-screen items-center justify-center bg-gray-50 px-6">
+        <div className="w-full max-w-md rounded-2xl border border-gray-200 bg-white p-8 shadow-lg">
           <div className="mb-8 text-center">
-            <span className="text-3xl text-gold">◆</span>
-            <h1 className="mt-4 text-2xl font-black">لوحة التحكم</h1>
-            <p className="mt-2 text-sm text-white/40">تسجيل دخول المدير</p>
+            <span className="text-3xl text-accent-dark">◆</span>
+            <h1 className="mt-4 text-2xl font-black text-foreground">
+              لوحة التحكم
+            </h1>
+            <p className="mt-2 text-sm text-gray-400">تسجيل دخول المدير</p>
           </div>
 
           {loginError && (
-            <p className="mb-4 rounded-lg bg-red-500/10 p-3 text-sm text-red-400">
+            <p className="mb-4 rounded-lg bg-red-50 p-3 text-sm text-red-600">
               {loginError}
             </p>
           )}
 
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
-              <label className="mb-1 block text-sm text-white/60">
+              <label className="mb-1 block text-sm text-gray-500">
                 البريد الإلكتروني
               </label>
               <input
@@ -95,12 +97,12 @@ export default function AdminLayout({
                 onChange={(e) =>
                   setLoginForm({ ...loginForm, email: e.target.value })
                 }
-                className="w-full rounded-xl border border-white/10 bg-charcoal-dark px-4 py-3 text-white outline-none focus:border-gold/50"
+                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-foreground outline-none focus:border-accent"
                 dir="ltr"
               />
             </div>
             <div>
-              <label className="mb-1 block text-sm text-white/60">
+              <label className="mb-1 block text-sm text-gray-500">
                 كلمة المرور
               </label>
               <input
@@ -110,13 +112,13 @@ export default function AdminLayout({
                 onChange={(e) =>
                   setLoginForm({ ...loginForm, password: e.target.value })
                 }
-                className="w-full rounded-xl border border-white/10 bg-charcoal-dark px-4 py-3 text-white outline-none focus:border-gold/50"
+                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-foreground outline-none focus:border-accent"
                 dir="ltr"
               />
             </div>
             <button
               type="submit"
-              className="w-full rounded-xl bg-gold py-3 font-bold text-background transition-colors hover:bg-gold-light"
+              className="w-full rounded-xl bg-accent py-3 font-bold text-navy transition-colors hover:bg-accent-light"
             >
               دخول
             </button>
@@ -127,12 +129,12 @@ export default function AdminLayout({
   }
 
   return (
-    <div className="flex min-h-screen bg-background">
+    <div className="flex min-h-screen bg-gray-50">
       {/* Sidebar */}
-      <aside className="fixed top-0 right-0 flex h-screen w-64 flex-col border-l border-white/5 bg-charcoal-dark">
-        <div className="flex h-16 items-center gap-2 border-b border-white/5 px-6">
-          <span className="text-xl text-gold">◆</span>
-          <span className="font-bold">لوحة التحكم</span>
+      <aside className="fixed top-0 right-0 flex h-screen w-64 flex-col border-l border-gray-200 bg-navy">
+        <div className="flex h-16 items-center gap-2 border-b border-white/10 px-6">
+          <span className="text-xl text-accent">◆</span>
+          <span className="font-bold text-white">لوحة التحكم</span>
         </div>
 
         <nav className="flex-1 space-y-1 p-4">
@@ -143,8 +145,8 @@ export default function AdminLayout({
               className={cn(
                 "block rounded-xl px-4 py-2.5 text-sm transition-all",
                 pathname === item.href
-                  ? "bg-gold/10 font-bold text-gold"
-                  : "text-white/50 hover:bg-white/5 hover:text-white"
+                  ? "bg-accent/15 font-bold text-accent"
+                  : "text-white/60 hover:bg-white/5 hover:text-white"
               )}
             >
               {item.label}
@@ -152,10 +154,10 @@ export default function AdminLayout({
           ))}
         </nav>
 
-        <div className="border-t border-white/5 p-4">
+        <div className="border-t border-white/10 p-4">
           <button
             onClick={handleLogout}
-            className="w-full rounded-xl bg-red-500/10 px-4 py-2 text-sm text-red-400 transition-colors hover:bg-red-500/20"
+            className="w-full rounded-xl bg-red-500/10 px-4 py-2 text-sm text-red-300 transition-colors hover:bg-red-500/20"
           >
             تسجيل الخروج
           </button>

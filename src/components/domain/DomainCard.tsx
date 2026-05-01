@@ -30,29 +30,29 @@ export default function DomainCard({
     >
       <Link
         href={`/domain/${fullName}`}
-        className="group block rounded-2xl border border-white/5 bg-charcoal p-6 transition-all duration-300 hover:border-gold/30 hover:bg-charcoal-light"
+        className="group block rounded-2xl border border-gray-200 bg-white p-6 shadow-sm transition-all duration-300 hover:border-accent hover:shadow-md"
       >
         <div className="mb-4 flex items-start justify-between">
           {category && (
-            <span className="rounded-full bg-gold/10 px-3 py-1 text-xs text-gold">
+            <span className="rounded-full bg-accent/10 px-3 py-1 text-xs text-accent-dark">
               {category}
             </span>
           )}
-          <span className="text-xs text-white/30">{tld}</span>
+          <span className="text-xs text-gray-400">{tld}</span>
         </div>
 
-        <h3 className="mb-1 text-2xl font-bold tracking-wide text-white transition-colors group-hover:text-gold">
+        <h3 className="mb-1 text-2xl font-bold tracking-wide text-foreground transition-colors group-hover:text-accent-dark">
           {name}
-          <span className="text-gold/60">{tld}</span>
+          <span className="text-accent">{tld}</span>
         </h3>
 
-        <div className="mt-4 flex items-center justify-between border-t border-white/5 pt-4">
+        <div className="mt-4 flex items-center justify-between border-t border-gray-100 pt-4">
           <span
-            className={`text-lg font-bold ${price != null ? "text-gold" : "text-gold/60"}`}
+            className={`text-lg font-bold ${price != null ? "text-accent-dark" : "text-accent"}`}
           >
             {formatPrice(price)}
           </span>
-          <span className="text-xs text-white/30 transition-colors group-hover:text-gold">
+          <span className="text-xs text-gray-400 transition-colors group-hover:text-accent-dark">
             عرض التفاصيل ←
           </span>
         </div>

@@ -8,29 +8,31 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 right-0 left-0 z-50 border-b border-white/5 bg-background/80 backdrop-blur-xl">
+    <nav className="fixed top-0 right-0 left-0 z-50 bg-navy/95 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
         <Link href="/" className="flex items-center gap-2">
-          <span className="text-2xl font-bold text-gold">◆</span>
-          <span className="text-lg font-bold tracking-wide">بريميوم</span>
+          <span className="text-2xl font-bold text-accent">◆</span>
+          <span className="text-lg font-bold tracking-wide text-white">
+            بريميوم
+          </span>
         </Link>
 
         <div className="hidden items-center gap-8 md:flex">
           <Link
             href="/"
-            className="text-sm text-white/70 transition-colors hover:text-gold"
+            className="text-sm text-white/70 transition-colors hover:text-accent"
           >
             الرئيسية
           </Link>
           <Link
             href="/domains"
-            className="text-sm text-white/70 transition-colors hover:text-gold"
+            className="text-sm text-white/70 transition-colors hover:text-accent"
           >
             النطاقات
           </Link>
           <Link
             href="/domains"
-            className="rounded-full border border-gold/30 bg-gold/10 px-5 py-2 text-sm font-medium text-gold transition-all hover:bg-gold hover:text-background"
+            className="rounded-full border border-accent/30 bg-accent/10 px-5 py-2 text-sm font-medium text-accent transition-all hover:bg-accent hover:text-navy"
           >
             تصفّح النطاقات
           </Link>
@@ -72,20 +74,20 @@ export default function Navbar() {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="overflow-hidden border-t border-white/5 md:hidden"
+            className="overflow-hidden border-t border-white/10 md:hidden"
           >
-            <div className="flex flex-col gap-4 px-6 py-4">
+            <div className="flex flex-col gap-4 bg-navy px-6 py-4">
               <Link
                 href="/"
                 onClick={() => setMobileOpen(false)}
-                className="text-sm text-white/70 transition-colors hover:text-gold"
+                className="text-sm text-white/70 transition-colors hover:text-accent"
               >
                 الرئيسية
               </Link>
               <Link
                 href="/domains"
                 onClick={() => setMobileOpen(false)}
-                className="text-sm text-white/70 transition-colors hover:text-gold"
+                className="text-sm text-white/70 transition-colors hover:text-accent"
               >
                 النطاقات
               </Link>
