@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import DomainCard from "./DomainCard";
+import Link from "next/link";
 
 export default async function FeaturedDomains() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -15,34 +16,60 @@ export default async function FeaturedDomains() {
       });
     }
   } catch {
-    // Database unavailable — show empty state
+    // Database unavailable
   }
 
   if (domains.length === 0) return null;
 
   return (
-    <section className="bg-white py-24">
+    <section className="bg-gray-50 py-20">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="mb-12 text-center">
-          <h2 className="mb-3 text-3xl font-black text-foreground md:text-4xl">
-            نطاقات <span className="text-accent-dark">مميزة</span>
-          </h2>
-          <p className="text-sm text-gray-500">
-            مجموعة مختارة بعناية من أفضل النطاقات المتاحة
-          </p>
+        <div className="mb-12 flex items-end justify-between">
+          <div>
+            <span className="mb-2 block text-xs font-bold tracking-widest text-accent uppercase">
+              The Collection
+            </span>
+            <h2 className="text-3xl font-black text-navy">
+              نطاقات <span className="text-accent">مميّزة</span>
+            </h2>
+          </div>
+          <Link
+            href="/domains"
+            className="text-sm font-medium text-gray-500 transition-colors hover:text-accent"
+          >
+            عرض الكل &larr;
+          </Link>
         </div>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {domains.map((domain) => (
-            <DomainCard
-              key={domain.id}
-              fullName={domain.fullName}
-              name={domain.name}
-              tld={domain.tld}
-              price={domain.price ? Number(domain.price) : null}
-              category={domain.category?.name}
-            />
-          ))}
+          {domains.map(
+            (domain: {
+              id: string;
+              name: string;
+              tld: string;
+              fullName: string;
+              description: string | null;
+              price: { toString(): string } | null;
+              arabicName: string | null;
+              views: number;
+              status: string;
+              category: { name: string } | null;
+            }) => (
+              <DomainCard
+                key={domain.id}
+                id={domain.id}
+                name={domain.name}
+                tld={domain.tld}
+                fullName={domain.fullName}
+                description={domain.description}
+                price={domain.price?.toString() ?? null}
+                arabicName={domain.arabicName}
+                views={domain.views}
+                status={domain.status}
+                category={domain.category?.name}
+              />
+            )
+          )}
         </div>
       </div>
     </section>

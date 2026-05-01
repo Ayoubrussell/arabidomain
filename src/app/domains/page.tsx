@@ -11,6 +11,7 @@ import DomainFilters from "@/components/domain/DomainFilters";
 interface PageProps {
   searchParams: Promise<{
     q?: string;
+    search?: string;
     category?: string;
     tld?: string;
     length?: string;
@@ -24,16 +25,17 @@ const PAGE_SIZE = 12;
 async function DomainsContent({ searchParams }: PageProps) {
   const params = await searchParams;
   const page = Math.max(1, Number(params.page) || 1);
+  const searchQuery = params.q || params.search || "";
 
   const where: Prisma.DomainWhereInput = {
     status: "AVAILABLE",
   };
 
-  if (params.q) {
+  if (searchQuery) {
     where.OR = [
-      { name: { contains: params.q, mode: "insensitive" } },
-      { fullName: { contains: params.q, mode: "insensitive" } },
-      { description: { contains: params.q, mode: "insensitive" } },
+      { name: { contains: searchQuery, mode: "insensitive" } },
+      { fullName: { contains: searchQuery, mode: "insensitive" } },
+      { description: { contains: searchQuery, mode: "insensitive" } },
     ];
   }
 
@@ -44,8 +46,6 @@ async function DomainsContent({ searchParams }: PageProps) {
   if (params.tld) {
     where.tld = params.tld;
   }
-
-  // Length filtering is done post-query since Prisma lacks native string length filters
 
   let orderBy: Prisma.DomainOrderByWithRelationInput = { createdAt: "desc" };
   if (params.sort === "price_asc") orderBy = { price: "asc" };
@@ -96,30 +96,48 @@ async function DomainsContent({ searchParams }: PageProps) {
 
       <div className="flex-1">
         <div className="mb-6 flex items-center justify-between">
-          <h2 className="text-lg font-bold">
-            النطاقات المتاحة{" "}
-            <span className="text-sm font-normal text-gray-400">
-              ({total} نطاق)
-            </span>
-          </h2>
+          <p className="text-sm text-gray-500">
+            {total} نطاق متاح
+          </p>
+          <select
+            defaultValue={params.sort || ""}
+            onChange={(e) => {
+              const url = new URLSearchParams(window.location.search);
+              if (e.target.value) url.set("sort", e.target.value);
+              else url.delete("sort");
+              url.delete("page");
+              window.location.href = `/domains?${url.toString()}`;
+            }}
+            className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-xs text-gray-600 outline-none"
+          >
+            <option value="">الأحدث</option>
+            <option value="price_asc">السعر: من الأقل</option>
+            <option value="price_desc">السعر: من الأعلى</option>
+            <option value="views">الأكثر مشاهدة</option>
+          </select>
         </div>
 
         {domains.length === 0 ? (
-          <div className="rounded-2xl border border-gray-200 bg-white py-20 text-center shadow-sm">
+          <div className="rounded-2xl border border-gray-200 bg-white py-20 text-center">
             <p className="text-lg text-gray-400">لا توجد نتائج</p>
             <p className="mt-2 text-sm text-gray-300">
               جرّب تغيير معايير البحث
             </p>
           </div>
         ) : (
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-2">
             {domains.map((domain) => (
               <DomainCard
                 key={domain.id}
+                id={domain.id}
                 fullName={domain.fullName}
                 name={domain.name}
                 tld={domain.tld}
-                price={domain.price ? Number(domain.price) : null}
+                description={domain.description}
+                price={domain.price ? domain.price.toString() : null}
+                arabicName={domain.arabicName}
+                views={domain.views}
+                status={domain.status}
                 category={domain.category?.name}
               />
             ))}
@@ -130,7 +148,7 @@ async function DomainsContent({ searchParams }: PageProps) {
           <div className="mt-8 flex items-center justify-center gap-2">
             {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => {
               const params2 = new URLSearchParams();
-              if (params.q) params2.set("q", params.q);
+              if (searchQuery) params2.set("q", searchQuery);
               if (params.category) params2.set("category", params.category);
               if (params.tld) params2.set("tld", params.tld);
               if (params.length) params2.set("length", params.length);
@@ -143,7 +161,7 @@ async function DomainsContent({ searchParams }: PageProps) {
                   href={`/domains?${params2.toString()}`}
                   className={`rounded-lg px-3 py-1.5 text-sm transition-all ${
                     p === page
-                      ? "bg-accent text-navy font-bold"
+                      ? "bg-navy font-bold text-white"
                       : "bg-gray-100 text-gray-500 hover:text-foreground"
                   }`}
                 >
@@ -162,25 +180,33 @@ export default function DomainsPage(props: PageProps) {
   return (
     <>
       <Navbar />
-      <main className="mx-auto max-w-7xl px-6 pt-24 pb-16">
-        <div className="mb-8">
-          <h1 className="mb-2 text-3xl font-black text-foreground md:text-4xl">
-            جميع <span className="text-accent-dark">النطاقات</span>
-          </h1>
-          <p className="text-sm text-gray-500">
-            تصفّح مجموعتنا الكاملة من النطاقات المميزة
-          </p>
-        </div>
+      <main className="pt-20">
+        <section className="bg-navy py-16">
+          <div className="mx-auto max-w-7xl px-6 text-center">
+            <span className="mb-2 block text-xs font-bold tracking-widest text-accent uppercase">
+              The Catalogue
+            </span>
+            <h1 className="mb-3 text-3xl font-black text-white">
+              جميع النطاقات
+            </h1>
+            <p className="text-sm text-gray-400">
+              استكشف مجموعتنا الكاملة من النطاقات العربية الفاخرة. استخدم الفلاتر
+              لتجد ما يناسب رؤيتك.
+            </p>
+          </div>
+        </section>
 
-        <Suspense
-          fallback={
-            <div className="py-20 text-center text-gray-400">
-              جاري التحميل...
-            </div>
-          }
-        >
-          <DomainsContent searchParams={props.searchParams} />
-        </Suspense>
+        <section className="mx-auto max-w-7xl px-6 py-12">
+          <Suspense
+            fallback={
+              <div className="py-20 text-center text-gray-400">
+                جاري التحميل...
+              </div>
+            }
+          >
+            <DomainsContent searchParams={props.searchParams} />
+          </Suspense>
+        </section>
       </main>
       <Footer />
     </>

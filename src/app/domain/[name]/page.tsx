@@ -31,7 +31,7 @@ export default async function DomainPage({ params }: PageProps) {
   return (
     <>
       <Navbar />
-      <main className="mx-auto max-w-5xl px-6 pt-24 pb-16">
+      <main className="pt-20">
         <DomainDetailsClient
           domain={{
             id: domain.id,
@@ -39,6 +39,7 @@ export default async function DomainPage({ params }: PageProps) {
             tld: domain.tld,
             fullName: domain.fullName,
             description: domain.description,
+            arabicName: domain.arabicName,
             price: domain.price ? Number(domain.price) : null,
             views: domain.views,
             status: domain.status,

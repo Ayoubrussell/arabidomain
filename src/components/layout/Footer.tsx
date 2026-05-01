@@ -2,53 +2,72 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="bg-navy">
-      <div className="mx-auto max-w-7xl px-6 py-12">
-        <div className="grid gap-8 md:grid-cols-3">
+    <footer className="border-t border-gray-200 bg-white">
+      <div className="mx-auto max-w-7xl px-6 py-16">
+        <div className="grid gap-12 md:grid-cols-3">
           <div>
             <div className="mb-4 flex items-center gap-2">
-              <span className="text-2xl font-bold text-accent">◆</span>
-              <span className="text-lg font-bold text-white">بريميوم</span>
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-navy text-sm font-black text-white">
+                ن
+              </span>
+              <div className="flex flex-col leading-tight">
+                <span className="text-base font-black text-navy">نِطاقات</span>
+                <span className="text-[9px] tracking-wider text-gray-400">
+                  Premium Arabic Domain Boutique
+                </span>
+              </div>
             </div>
-            <p className="text-sm leading-relaxed text-white/50">
-              بوتيك النطاقات الفاخرة — نقدم لك أفضل النطاقات العربية المميزة
-              للعلامات التجارية الراقية.
+            <p className="max-w-xs text-sm leading-relaxed text-gray-500">
+              بوتيك متخصص في تنسيق وبيع نطاقات عربية فاخرة من كلمة واحدة،
+              مُختارة بعناية لخدمة العلامات التجارية الراقية والشركات الطموحة في
+              العالم العربي.
             </p>
           </div>
 
-          <div>
-            <h4 className="mb-4 text-sm font-bold text-accent">روابط سريعة</h4>
-            <ul className="space-y-2 text-sm text-white/50">
-              <li>
-                <Link
-                  href="/"
-                  className="transition-colors hover:text-accent"
-                >
-                  الرئيسية
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/domains"
-                  className="transition-colors hover:text-accent"
-                >
-                  جميع النطاقات
-                </Link>
-              </li>
-            </ul>
+          <div className="grid grid-cols-2 gap-8">
+            <div>
+              <h4 className="mb-4 text-sm font-bold text-navy">روابط سريعة</h4>
+              <ul className="space-y-2.5">
+                {[
+                  { href: "/", label: "الرئيسية" },
+                  { href: "/domains", label: "النطاقات" },
+                  { href: "/about", label: "من نحن" },
+                  { href: "/contact", label: "تواصل" },
+                ].map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="text-sm text-gray-500 transition-colors hover:text-accent"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h4 className="mb-4 text-sm font-bold text-navy">الفئات</h4>
+              <ul className="space-y-2.5">
+                {["العقارات", "السيارات", "التقنية", "المالية"].map((cat) => (
+                  <li key={cat}>
+                    <span className="text-sm text-gray-500">{cat}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
 
           <div>
-            <h4 className="mb-4 text-sm font-bold text-accent">تواصل معنا</h4>
-            <ul className="space-y-2 text-sm text-white/50">
-              <li>info@premium-domains.com</li>
+            <h4 className="mb-4 text-sm font-bold text-navy">تواصل معنا</h4>
+            <ul className="space-y-2.5 text-sm text-gray-500">
+              <li>sales@nitaqat.boutique</li>
               <li>المملكة العربية السعودية</li>
             </ul>
           </div>
         </div>
 
-        <div className="mt-8 border-t border-white/10 pt-8 text-center text-xs text-white/30">
-          © {new Date().getFullYear()} بريميوم. جميع الحقوق محفوظة.
+        <div className="mt-12 border-t border-gray-100 pt-6 text-center text-xs text-gray-400">
+          &copy; {new Date().getFullYear()} نِطاقات. جميع الحقوق محفوظة.
         </div>
       </div>
     </footer>
