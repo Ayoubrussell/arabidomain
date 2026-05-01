@@ -47,7 +47,7 @@ export default function DomainDetailsClient({
 
             <h1 className="mb-2 text-5xl font-black text-white md:text-7xl">
               {domain.name}
-              <span className="text-accent">.{domain.tld}</span>
+              <span className="text-accent">{domain.tld}</span>
             </h1>
 
             {domain.arabicName && (
@@ -57,7 +57,7 @@ export default function DomainDetailsClient({
             )}
 
             <div className="flex items-center justify-center gap-4 text-sm text-gray-500">
-              <span dir="ltr">.{domain.tld}</span>
+              <span dir="ltr">{domain.tld}</span>
               <span>•</span>
               <span>{domain.name.length} أحرف</span>
               <span>•</span>

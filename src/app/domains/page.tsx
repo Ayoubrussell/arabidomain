@@ -7,6 +7,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import DomainCard from "@/components/domain/DomainCard";
 import DomainFilters from "@/components/domain/DomainFilters";
+import SortDropdown from "@/components/domain/SortDropdown";
 
 interface PageProps {
   searchParams: Promise<{
@@ -99,22 +100,7 @@ async function DomainsContent({ searchParams }: PageProps) {
           <p className="text-sm text-gray-500">
             {total} نطاق متاح
           </p>
-          <select
-            defaultValue={params.sort || ""}
-            onChange={(e) => {
-              const url = new URLSearchParams(window.location.search);
-              if (e.target.value) url.set("sort", e.target.value);
-              else url.delete("sort");
-              url.delete("page");
-              window.location.href = `/domains?${url.toString()}`;
-            }}
-            className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-xs text-gray-600 outline-none"
-          >
-            <option value="">الأحدث</option>
-            <option value="price_asc">السعر: من الأقل</option>
-            <option value="price_desc">السعر: من الأعلى</option>
-            <option value="views">الأكثر مشاهدة</option>
-          </select>
+          <SortDropdown currentSort={params.sort || ""} />
         </div>
 
         {domains.length === 0 ? (

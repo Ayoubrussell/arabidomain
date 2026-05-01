@@ -60,7 +60,7 @@ export default function DomainCard({
       <Link href={`/domain/${fullName}`} className="block">
         <div className="mb-1">
           <span className="text-3xl font-black text-navy">{name}</span>
-          <span className="text-3xl font-black text-accent">.{tld}</span>
+          <span className="text-3xl font-black text-accent">{tld}</span>
         </div>
 
         {arabicName && (
