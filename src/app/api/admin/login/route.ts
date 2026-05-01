@@ -1,11 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { requireDb } from "@/lib/db";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 const JWT_SECRET = process.env.JWT_SECRET || "premium-domains-secret-key";
 
 export async function POST(request: NextRequest) {
+  const db = requireDb();
+  if (db instanceof NextResponse) return db;
+
   const body = await request.json();
 
   if (!body.email || !body.password) {
@@ -15,7 +18,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const admin = await prisma.admin.findUnique({
+  const admin = await db.admin.findUnique({
     where: { email: body.email },
   });
 

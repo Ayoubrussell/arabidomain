@@ -54,14 +54,25 @@ async function DomainsContent({ searchParams }: PageProps) {
 
   const lengthFilter = params.length ? Number(params.length) : 0;
 
-  const [allDomains, categories] = await Promise.all([
-    prisma.domain.findMany({
-      where,
-      include: { category: true },
-      orderBy,
-    }),
-    prisma.category.findMany({ orderBy: { name: "asc" } }),
-  ]);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let allDomains: any[] = [];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let categories: any[] = [];
+
+  try {
+    if (prisma) {
+      [allDomains, categories] = await Promise.all([
+        prisma.domain.findMany({
+          where,
+          include: { category: true },
+          orderBy,
+        }),
+        prisma.category.findMany({ orderBy: { name: "asc" } }),
+      ]);
+    }
+  } catch {
+    // Database unavailable
+  }
 
   const filtered = lengthFilter
     ? allDomains.filter((d) =>

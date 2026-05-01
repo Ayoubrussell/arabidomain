@@ -1,13 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { requireDb } from "@/lib/db";
 import { verifyAdmin } from "@/lib/auth";
 
 export async function GET(
   _request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const db = requireDb();
+  if (db instanceof NextResponse) return db;
+
   const { id } = await params;
-  const domain = await prisma.domain.findUnique({
+  const domain = await db.domain.findUnique({
     where: { id },
     include: { category: true },
   });
@@ -23,13 +26,15 @@ export async function PUT(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const db = requireDb();
+  if (db instanceof NextResponse) return db;
   const auth = verifyAdmin(request);
   if (auth instanceof NextResponse) return auth;
 
   const { id } = await params;
   const body = await request.json();
 
-  const domain = await prisma.domain.update({
+  const domain = await db.domain.update({
     where: { id },
     data: {
       name: body.name,
@@ -50,10 +55,12 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const db = requireDb();
+  if (db instanceof NextResponse) return db;
   const auth = verifyAdmin(request);
   if (auth instanceof NextResponse) return auth;
 
   const { id } = await params;
-  await prisma.domain.delete({ where: { id } });
+  await db.domain.delete({ where: { id } });
   return NextResponse.json({ success: true });
 }

@@ -1,9 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { requireDb } from "@/lib/db";
 import { verifyAdmin } from "@/lib/auth";
 
 export async function GET() {
-  const categories = await prisma.category.findMany({
+  const db = requireDb();
+  if (db instanceof NextResponse) return db;
+
+  const categories = await db.category.findMany({
     include: { _count: { select: { domains: true } } },
     orderBy: { name: "asc" },
   });
@@ -11,12 +14,14 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
+  const db = requireDb();
+  if (db instanceof NextResponse) return db;
   const auth = verifyAdmin(request);
   if (auth instanceof NextResponse) return auth;
 
   const body = await request.json();
 
-  const category = await prisma.category.create({
+  const category = await db.category.create({
     data: {
       name: body.name,
       slug: body.slug,
