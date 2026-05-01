@@ -1,0 +1,95 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── Enums ───────────────────────────────────────────────
+
+enum DomainStatus {
+  AVAILABLE
+  PENDING
+  SOLD
+}
+
+enum InquiryStatus {
+  NEW
+  CONTACTED
+  NEGOTIATING
+  CLOSED
+  REJECTED
+}
+
+// ─── Models ──────────────────────────────────────────────
+
+model Domain {
+  id          String       @id @default(cuid())
+  name        String       // e.g. "aqar"
+  tld         String       // e.g. ".com"
+  fullName    String       @unique @map("full_name") // e.g. "aqar.com"
+  description String?      @db.Text
+  price       Decimal?     @db.Decimal(12, 2) // nullable → "Make an Offer"
+  views       Int          @default(0)
+  isFeatured  Boolean      @default(false) @map("is_featured")
+  status      DomainStatus @default(AVAILABLE)
+
+  categoryId String?   @map("category_id")
+  category   Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+
+  inquiries Inquiry[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([status])
+  @@index([categoryId])
+  @@index([isFeatured])
+  @@map("domains")
+}
+
+model Category {
+  id   String @id @default(cuid())
+  name String @unique // e.g. "عقارات" (Real Estate)
+  slug String @unique // e.g. "real-estate"
+
+  domains Domain[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("categories")
+}
+
+model Inquiry {
+  id          String        @id @default(cuid())
+  buyerName   String        @map("buyer_name")
+  email       String
+  phone       String?
+  offerAmount Decimal?      @map("offer_amount") @db.Decimal(12, 2)
+  message     String?       @db.Text
+  status      InquiryStatus @default(NEW)
+
+  domainId String @map("domain_id")
+  domain   Domain @relation(fields: [domainId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([domainId])
+  @@index([status])
+  @@map("inquiries")
+}
+
+model Admin {
+  id           String @id @default(cuid())
+  email        String @unique
+  passwordHash String @map("password_hash")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("admins")
+}
