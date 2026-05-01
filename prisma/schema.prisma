@@ -31,6 +31,7 @@ model Domain {
   tld         String       // e.g. ".com"
   fullName    String       @unique @map("full_name") // e.g. "aqar.com"
   description String?      @db.Text
+  arabicName  String?      @map("arabic_name") // e.g. "عَقار"
   price       Decimal?     @db.Decimal(12, 2) // nullable → "Make an Offer"
   views       Int          @default(0)
   isFeatured  Boolean      @default(false) @map("is_featured")
